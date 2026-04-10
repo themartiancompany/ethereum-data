@@ -72,7 +72,7 @@ _PHONY_TARGETS=\
   $(_INSTALL_TARGETS_ALL) \
   publish-npm
   
-all: build build-split
+all: build-man build build-split
 
 check: shellcheck
 
@@ -115,7 +115,7 @@ build-man:
 	cp \
 	  -r \
 	  "man" \
-	  "build"
+	  "build/"
 	cd \
 	  "build/man" && \
 	make \
