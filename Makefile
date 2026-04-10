@@ -172,20 +172,33 @@ build-split:
 	      "$${_network}" | \
 	      jq \
 	        ".chainId")"; \
-	  echo \
-	    "$${_network}" | \
-	    jq \
-	      "[.]" > \
-	      "build/chains/$${_chain_id}.json"; \
-	  _msg=( \
-	    "Written configuration file" \
-	    "for network with chain ID" \
-	    "'$${_chain_id}'" \
-	    "('$${_index}'" \
-	    "out of '$${_index_end}')." \
-	  ) \
-	  echo \
-	   "$${_msg[*]}"; \
+	  if [[ -e "build/chains/$${_chain_id}.json" ]]; then \
+	    _msg=( \
+	      "Configuration file" \
+	      "for network with chain ID" \
+	      "'$${_chain_id}'" \
+	      "already written." \
+	      "('$${_index}'" \
+	      "out of '$${_index_end}')." \
+	    ); \
+	    echo \
+	     "$${_msg[*]}"; \
+	  elif [[ ! -e "build/chains/$${_chain_id}.json" ]]; then \
+	    echo \
+	      "$${_network}" | \
+	      jq \
+	        "[.]" > \
+	        "build/chains/$${_chain_id}.json"; \
+	    _msg=( \
+	      "Written configuration file" \
+	      "for network with chain ID" \
+	      "'$${_chain_id}'" \
+	      "('$${_index}'" \
+	      "out of '$${_index_end}')." \
+	    ); \
+	    echo \
+	     "$${_msg[*]}"; \
+	  fi \
 	done
 
 install: $(_INSTALL_TARGETS)
