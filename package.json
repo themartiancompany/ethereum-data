@@ -27,16 +27,16 @@
     "ethereum"
   ],
   "homepage":
-    "https://github.com/themartiancompany/evm-chains",
+    "https://github.com/themartiancompany/ethereum-data",
   "bugs": {
     "url":
-      "https://github.com/themartiancompany/evm-chains/issues"
+      "https://github.com/themartiancompany/ethereum-data/issues"
   },
   "repository": {
     "type":
       "git",
     "url":
-      "git+https://github.com/themartiancompany/evm-chains.git"
+      "git+https://github.com/themartiancompany/ethereum-data.git"
   },
   "license":
     "AGPL-3.0-or-later",
