@@ -101,6 +101,26 @@ build:
 	  "chains.json" \
 	  "build/chains"
 
+
+build-man:
+
+	git \
+	  submodule \
+	    update \
+	      --init \
+	      "man"
+	mkdir \
+	  -p \
+	  "build"
+	cp \
+	  -r \
+	  "man" \
+	  "build"
+	cd \
+	  "build/man" && \
+	make \
+	  "build-man"
+
 build-npm:
 
 	mkdir \
@@ -206,7 +226,7 @@ install-man:
 	cd \
 	  "build/man" && \
 	make \
-	  "build-man"
+	  "install-man"
 
 publish:
 
