@@ -60,7 +60,6 @@ INSTALL_DOC_TARGETS=\
   install-doc \
   install-man
 _INSTALL_TARGETS=\
-  install-scripts \
   $(_INSTALL_DOC_TARGETS)
 _INSTALL_TARGETS_ALL=\
   install \
@@ -170,8 +169,6 @@ build-split:
 	done
 
 install: $(_INSTALL_TARGETS)
-
-install-scripts: $(_INSTALL_SCRIPTS_TARGETS)
 
 install:
 
