@@ -106,7 +106,7 @@ build-split:
 
 	mkdir \
 	 -p \
-	 "build"
+	 "build/chains"
 	$(_INSTALL_FILE) \
 	  "COPYING" \
 	  "build/COPYING"
@@ -149,7 +149,7 @@ build-split:
 	    "$${_network}" | \
 	    jq \
 	      "[.]" > \
-	      "build/$${_chain_id}.json"; \
+	      "build/chains/$${_chain_id}.json"; \
 	  _msg=( \
 	    "Written configuration file" \
 	    "for network with chain ID" \
