@@ -44,13 +44,59 @@ on that list.
 
 Right now it is in the sense that you can edit
 the evmfs link in the Makefile to point to another
-JSON.
+JSON
 
 The smart contract deployment is supposed to
 mirror the data, or at least contain the RPC
 links because this package is a dependency for
 [LibEVM](
   https://github.com/themartiancompany/libevm).
+
+## Build
+
+You can build the NPM package with Make
+with the command
+
+```bash
+make
+```
+
+## Install
+
+The data can be installed with the command
+
+```bash
+make \
+  install
+```
+
+The data can be retrieved from NPM
+with the command
+
+```bash
+npm \
+  install \
+  "ethereum-data"
+
+## Forking (re-publishing) a new list
+
+After the package is build one can republish an
+edited version of the list on the EVMFS by typing
+
+```bash
+make \
+  publish
+```
+
+To republish the package
+on NPM on his/her own namespace one can type
+
+```bash
+make \
+  publish-npm
+```
+
+After appropriately editing the `package.json`.
 
 ## License
 

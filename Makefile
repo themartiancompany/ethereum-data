@@ -158,19 +158,15 @@ install: $(_INSTALL_TARGETS)
 
 install-scripts: $(_INSTALL_SCRIPTS_TARGETS)
 
-install-bash-scripts:
+install:
 
-	for _file in $(_BASH_FILES); do \
-	  $(_INSTALL_EXE) \
-	    "$(_PROJECT)/$${_file}" \
-	    "$(BIN_DIR)/$${_file}"; \
-	done
-
-install-node-scripts:
-
-	for _file in $(_NODE_FILES); do \
-	  $(_INSTALL_EXE) \
-	    "$(_PROJECT)/$${_file}" \
+	for _file \
+	  in $$(find \
+	          -type \
+	            "f" \
+	          "build/chains"); do \
+	  $(_INSTALL_FILE) \
+	    "build/chains/$${_file}" \
 	    "$(LIB_DIR)/$(_PROJECT)/$${_file}"; \
 	done
 
