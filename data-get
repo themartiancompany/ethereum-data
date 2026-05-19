@@ -50,9 +50,11 @@ function
     _chain_id) {
   const
     _path =
-      _path_join(
-        ["chains",
-         `${_chain_id}.json`]);
+      _path_join( [
+        __dirname,
+        "chains",
+        `${_chain_id}.json`
+      ]);
   const
     _data =
       _json_read(
@@ -83,9 +85,11 @@ function
   _data_unified_get() {
   const
     _path =
-      _path_join(
-        ["chains",
-         `chains.json`]);
+      _path_join( [
+        __dirname,
+        "chains",
+        `chains.json`
+      ]);
   const
     _data =
       _json_read(

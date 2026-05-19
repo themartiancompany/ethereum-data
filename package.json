@@ -2,7 +2,7 @@
   "name":
     "ethereum-data",
   "version":
-    "0.0.3",
+    "0.0.4",
   "description":
     "Data about Ethereum Virtual Machine networks.",
   "funding": {
@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "crash-js-webpack":
-      "^0.0.3",
+      "^0.0.9",
     "eslint":
       "^10.0.3",
     "@eslint/js":
@@ -74,7 +74,7 @@
   },
   "dependencies": {
     "crash-js":
-      "^0.1.91"
+      "^0.1.107"
   },
   "type":
     "commonjs",
