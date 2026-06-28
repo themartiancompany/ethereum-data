@@ -37,6 +37,7 @@ const
     "node_modules/**",
     "eslint.config.js",
     "fs-worker.js",
+    `${_project}.js`,
     "man/**"
   ];
 export default defineConfig([
