@@ -30,22 +30,26 @@ import { defineConfig } from "eslint/config";
 const
   _project =
     "ethereum-data";
-
+const
+  ignores: [
+    "build/**",
+    "dist/**",
+    "node_modules/**",
+    "eslint.config.js",
+    "fs-worker.js",
+    "man/**"
+  ];
 export default defineConfig([
  {
-   ignores: [
-     "build/**",
-     "node_modules/**",
-     "eslint.config.js",
-     "man/**"
-   ],
+   ignores:
+     _ignores,
    rules:
      { semi:
          "error",
        "prefer-const":
          "error" },
    files:
-     [ "**/*js,mjs,cjs}",
+     [ "**/*.{js,mjs,cjs}",
        `**/data-get*`,
      ],
    plugins:
@@ -57,12 +61,8 @@ export default defineConfig([
          {  ...globals.browser,
             ...globals.node } } },
  { 
-   ignores: [
-     "build/**",
-     "eslint.config.js",
-     "node_modules/**",
-     "man/**"
-   ],
+   ignores:
+     _ignores,
    rules:
      { semi:
          "error",
