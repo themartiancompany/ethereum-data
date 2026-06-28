@@ -31,7 +31,7 @@ const
   _project =
     "ethereum-data";
 const
-  ignores: [
+  ignores = [
     "build/**",
     "dist/**",
     "node_modules/**",
