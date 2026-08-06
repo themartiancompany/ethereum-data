@@ -33,6 +33,12 @@ const
     require(
       "crash-js");
 /* global
+     _file_exists */
+/* eslint-disable-next-line
+     no-global-assign */
+_file_exists =
+  _libcrash_module._file_exists;
+/* global
      _json_read */
 /* eslint-disable-next-line
      no-global-assign */
@@ -48,6 +54,10 @@ _path_join =
 function
   _data_split_get(
     _chain_id) {
+  let
+    _data;
+  _data =
+    [];
   const
     _path =
       _path_join( [
@@ -55,10 +65,12 @@ function
         "chains",
         `${_chain_id}.json`
       ]);
-  const
+  if ( _file_exists(
+         _path) ) {
     _data =
       _json_read(
         _path);
+  }
   return _data;
 }
 
