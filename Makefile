@@ -24,7 +24,7 @@
 #    along with this program.
 #    If not, see <https://www.gnu.org/licenses/>.
 
-
+_SPLIT ?= true
 SHELL ?= bash
 PREFIX ?= /usr/local
 _PROJECT=evm-chains
@@ -226,8 +226,10 @@ build-npm:
 	  "build"
 	make \
 	  build-unified
-	make \
-	  build-split
+	if [[ "$(_SPLIT)" == "true" ]]; then \
+	  make \
+	    build-split; \
+	fi
 	cd \
 	  "build" && \
 	npm \
