@@ -242,7 +242,7 @@ build-npm:
 	  "."; \
 	npm \
 	  run \
-            build; \
+	    build; \
 	npm \
 	  pack
 
