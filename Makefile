@@ -218,10 +218,11 @@ build-npm:
 	  "AUTHORS.rst" \
 	  "COPYING" \
 	  "README.md" \
-	  "licenses" \
-	  "eslint.config.mjs" \
-	  "package.json" \
 	  "data-get" \
+	  "dist" \
+	  "eslint.config.mjs" \
+	  "licenses" \
+	  "package.json" \
 	  "webpack.config.cjs" \
 	  "build"
 	make \
