@@ -231,17 +231,17 @@ build-npm:
 	    build-split; \
 	fi
 	cd \
-	  "build" && \
+	  "build"; \
 	npm \
 	  install \
-	  .
+	  "."; \
 	npm \
 	  install \
 	  --save-dev \
-	  .
+	  "."; \
 	npm \
 	  run \
-            build
+            build; \
 	npm \
 	  pack
 
