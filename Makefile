@@ -24,14 +24,16 @@
 #    along with this program.
 #    If not, see <https://www.gnu.org/licenses/>.
 
+_NPM ?= false
 _SPLIT ?= true
 SHELL ?= bash
 PREFIX ?= /usr/local
 _PROJECT=evm-chains
+_PROJECT_NPM=ethereum-data
 DOC_DIR=$(DESTDIR)$(PREFIX)/share/doc/$(_PROJECT)
 BIN_DIR=$(DESTDIR)$(PREFIX)/bin
 MAN_DIR?=$(DESTDIR)$(PREFIX)/share/man
-LIB_DIR=$(DESTDIR)$(PREFIX)/lib
+LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)
 
 _INSTALL_FILE=\
   install \
@@ -68,9 +70,11 @@ INSTALL_DOC_TARGETS=\
   install-doc \
   install-man
 _INSTALL_TARGETS=\
+  install-scripts \
   $(_INSTALL_DOC_TARGETS)
 _INSTALL_TARGETS_ALL=\
   install \
+  install-npm \
   $(_INSTALL_TARGETS) \
   $(_INSTALL_SCRIPTS_TARGETS)
 
@@ -208,11 +212,93 @@ build-split:
 	  fi \
 	done
 
+install-scripts:
+
+	if [[ "$(_NPM)" == "false" ]]; then \
+	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/$(_PROJECT_NPM)" ]]; then \
+	    ln \
+	      -s \
+	      "$(PREFIX)/lib/$(_PROJECT)" \
+	      "$(DESTDIR)$(PREFIX)/lib/$(_PROJECT_NPM)"; \
+	  fi; \
+	  $(_INSTALL_DIR) \
+	    "$(LIB_DIR)/nodejs"; \
+	  rm \
+	    "$(LIB_DIR)/node_modules" || \
+	    true; \
+	  ln \
+	    -s \
+	    "$(PREFIX)/lib/node_modules" \
+	    "$(LIB_DIR)/node_modules" || \
+	    true; \
+	  rm \
+	    -rf \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)"; \
+	  ln \
+	    -s \
+	    "$(PREFIX)/lib/$(_PROJECT)/nodejs" \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" || \
+	    true; \
+	  ln \
+	    -s \
+	    "$(PREFIX)/lib/$(_PROJECT)/nodejs" \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" || \
+	    true; \
+	  mkdir \
+	   -p \
+	   "build/chains"; \
+	  make \
+	    build-unified; \
+	  if [[ "$(_SPLIT)" == "true" ]]; then \
+	    make \
+	      build-split; \
+	  fi; \
+	  cp \
+	    -r \
+	    "build/chains" \
+	    "$${PWD}"; \
+	  cp \
+	    "chains/"* \
+	    "$(LIB_DIR)"; \
+	  cp \
+	    -r \
+	    "chains" \
+	    "$(LIB_DIR)/nodejs"; \
+	  cp \
+	    -r \
+	    $$(printf \
+	         "$${PWD}/%s " \
+	         $$(cat \
+	              "$${PWD}/package.json" | \
+	              jq \
+	                --raw-output \
+	                '.files[]')) \
+	    "$(LIB_DIR)/nodejs"; \
+	  rm \
+	    -r \
+	    "chains"; \
+	elif [[ "$(_NPM)" == "true" ]]; then \
+	  make \
+	    install-npm; \
+	  ln \
+	   -s \
+	    "$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" \
+	    "$(LIB_DIR)/nodejs" || \
+	  true; \
+	fi
+
 build-npm:
 
 	mkdir \
 	 -p \
 	 "build/chains"
+	make \
+	  build-unified
+	if [[ "$(_SPLIT)" == "true" ]]; then \
+	  make \
+	    build-split; \
+	fi
 	cp \
 	  -r \
 	  "AUTHORS.rst" \
@@ -225,12 +311,6 @@ build-npm:
 	  "package.json" \
 	  "webpack.config.cjs" \
 	  "build"
-	make \
-	  build-unified
-	if [[ "$(_SPLIT)" == "true" ]]; then \
-	  make \
-	    build-split; \
-	fi
 	cd \
 	  "build"; \
 	npm \
@@ -246,7 +326,6 @@ build-npm:
 	npm \
 	  pack
 
-
 install: $(_INSTALL_TARGETS)
 
 install:
@@ -258,7 +337,7 @@ install:
 	          "build/chains"); do \
 	  $(_INSTALL_FILE) \
 	    "build/chains/$${_file}" \
-	    "$(LIB_DIR)/$(_PROJECT)/$${_file}"; \
+	    "$(LIB_DIR)/$${_file}"; \
 	done
 
 install-doc:
