@@ -21,9 +21,8 @@
     "chains",
     "data-get",
     "dist",
-    "fs-worker.webpack.config.js",
+    "fs-worker.webpack.config.cjs",
     "licenses",
-    "serve.json",
     "webpack.config.cjs"
   ],
   "keywords": [
