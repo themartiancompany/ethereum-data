@@ -177,9 +177,16 @@ build-split:
 	 "$${_msg[*]}"; \
 	_chains_existing="$$(( \
 	  "$$(ls \
-	       -lsh | \
+	       -lsh \
+	       "build/chains" | \
 	       wc \
-	         -l)" - 1 ))"; \
+	         -l)" - 2 ))"; \
+	_msg=( \
+	  "Found '$${_chains_existing}'" \
+	  "chains." \
+	); \
+	echo \
+	 "$${_msg[*]}"; \
 	if [[ "$${_chains_amount}" == "$${_chains_existing}" ]]; then \
 	  _msg=( \
 	    "Chains split files already built." \

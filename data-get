@@ -32,23 +32,26 @@ const
   _libcrash_module_import =
     await import(
       "crash-js");
-console.log(_libcrash_module_import);
+console.log(_libcrash_module_import.default);
 const
   _libcrash_module =
-    _libcrash_module_import[
-      "default"];
+    _libcrash_module_import.default;
+console.log(_libcrash_module);
 /* global
      _file_exists */
-_file_exists =
-  _libcrash_module['_file_exists'];
+const
+  _file_exists =
+    _libcrash_module._file_exists;
 /* global
      _json_read */
-_json_read =
-  _libcrash_module._json_read;
+const
+  _json_read =
+    _libcrash_module._json_read;
 /* global
      _path_join */
-_path_join =
-  _libcrash_module._path_join;
+const
+  _path_join =
+    _libcrash_module._path_join;
 
 function
   _data_split_get(
@@ -108,11 +111,17 @@ function
   return _data;
 }
 
-module.exports = {
-  _data_get:
-    _data_get,
-  _data_split_get:
-    _data_split_get,
-  _data_unified_get:
-    _data_unified_get
-};
+export {
+  _data_get,
+  _data_split_get,
+  _data_unified_get
+}
+
+// module.exports = {
+//   _data_get:
+//     _data_get,
+//   _data_split_get:
+//     _data_split_get,
+//   _data_unified_get:
+//     _data_unified_get
+// };
