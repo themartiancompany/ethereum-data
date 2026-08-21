@@ -29,25 +29,23 @@
  */
 
 const
-  _libcrash_module =
-    require(
+  _libcrash_module_import =
+    await import(
       "crash-js");
+const
+  _libcrash_module =
+    _libcrash_module_import[
+      "default"];
 /* global
      _file_exists */
-/* eslint-disable-next-line
-     no-global-assign */
 _file_exists =
   _libcrash_module._file_exists;
 /* global
      _json_read */
-/* eslint-disable-next-line
-     no-global-assign */
 _json_read =
   _libcrash_module._json_read;
 /* global
      _path_join */
-/* eslint-disable-next-line
-     no-global-assign */
 _path_join =
   _libcrash_module._path_join;
 
