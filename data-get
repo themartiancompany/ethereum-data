@@ -32,6 +32,7 @@ const
   _libcrash_module_import =
     await import(
       "crash-js");
+console.log(_libcrash_module_import);
 const
   _libcrash_module =
     _libcrash_module_import[
@@ -39,7 +40,7 @@ const
 /* global
      _file_exists */
 _file_exists =
-  _libcrash_module._file_exists;
+  _libcrash_module['_file_exists'];
 /* global
      _json_read */
 _json_read =

@@ -23,6 +23,7 @@
     "dist",
     "fs-worker.webpack.config.cjs",
     "licenses",
+    "package.json",
     "webpack.config.cjs"
   ],
   "keywords": [

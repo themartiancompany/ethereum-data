@@ -96,6 +96,15 @@ shellcheck:
 	    . \
 	    1>&"/dev/null"
 
+build-chains:
+
+	make \
+	  build-unified
+	if [[ "$(_SPLIT)" == "true" ]]; then \
+	  make \
+	    build-split; \
+	fi
+
 build-man:
 
 	_tag="$$( \
@@ -166,51 +175,64 @@ build-split:
 	); \
 	echo \
 	 "$${_msg[*]}"; \
-	_index_end="$$(( \
-	  "$${_chains_amount}" - \
-	  1 ))"; \
-	for _index \
-	  in $$(seq \
-	         "0" \
-	         "$${_index_end}"); do \
-	  _jq_query="[.[]][$${_index}]"; \
-	  _network="$$( \
-	    jq \
-	      "$${_jq_query}" \
-	      "chains.json")"; \
-	  _chain_id="$$( \
-	    echo \
-	      "$${_network}" | \
+	_chains_existing="$$(( \
+	  "$$(ls \
+	       -lsh | \
+	       wc \
+	         -l)" - 1 ))"; \
+	if [[ "$${_chains_amount}" == "$${_chains_existing}" ]]; then \
+	  _msg=( \
+	    "Chains split files already built." \
+	  ); \
+	  echo \
+	   "$${_msg[*]}"; \
+	else \
+	  _index_end="$$(( \
+	    "$${_chains_amount}" - \
+	    1 ))"; \
+	  for _index \
+	    in $$(seq \
+	           "0" \
+	           "$${_index_end}"); do \
+	    _jq_query="[.[]][$${_index}]"; \
+	    _network="$$( \
 	      jq \
-	        ".chainId")"; \
-	  if [[ -e "build/chains/$${_chain_id}.json" ]]; then \
-	    _msg=( \
-	      "Configuration file" \
-	      "for network with chain ID" \
-	      "'$${_chain_id}'" \
-	      "already written." \
-	      "('$${_index}'" \
-	      "out of '$${_index_end}')." \
-	    ); \
-	    echo \
-	     "$${_msg[*]}"; \
-	  elif [[ ! -e "build/chains/$${_chain_id}.json" ]]; then \
-	    echo \
-	      "$${_network}" | \
-	      jq \
-	        "[.]" > \
-	        "build/chains/$${_chain_id}.json"; \
-	    _msg=( \
-	      "Written configuration file" \
-	      "for network with chain ID" \
-	      "'$${_chain_id}'" \
-	      "('$${_index}'" \
-	      "out of '$${_index_end}')." \
-	    ); \
-	    echo \
-	     "$${_msg[*]}"; \
-	  fi \
-	done
+	        "$${_jq_query}" \
+	        "chains.json")"; \
+	    _chain_id="$$( \
+	      echo \
+	        "$${_network}" | \
+	        jq \
+	          ".chainId")"; \
+	    if [[ -e "build/chains/$${_chain_id}.json" ]]; then \
+	      _msg=( \
+	        "Configuration file" \
+	        "for network with chain ID" \
+	        "'$${_chain_id}'" \
+	        "already written." \
+	        "('$${_index}'" \
+	        "out of '$${_index_end}')." \
+	      ); \
+	      echo \
+	       "$${_msg[*]}"; \
+	    elif [[ ! -e "build/chains/$${_chain_id}.json" ]]; then \
+	      echo \
+	        "$${_network}" | \
+	        jq \
+	          "[.]" > \
+	          "build/chains/$${_chain_id}.json"; \
+	      _msg=( \
+	        "Written configuration file" \
+	        "for network with chain ID" \
+	        "'$${_chain_id}'" \
+	        "('$${_index}'" \
+	        "out of '$${_index_end}')." \
+	      ); \
+	      echo \
+	       "$${_msg[*]}"; \
+	    fi \
+	  done; \
+	fi
 
 install-scripts:
 
@@ -249,11 +271,7 @@ install-scripts:
 	   -p \
 	   "build/chains"; \
 	  make \
-	    build-unified; \
-	  if [[ "$(_SPLIT)" == "true" ]]; then \
-	    make \
-	      build-split; \
-	  fi; \
+	    build-chains; \
 	  cp \
 	    -r \
 	    "build/chains" \
@@ -294,11 +312,7 @@ build-npm:
 	 -p \
 	 "build/chains"
 	make \
-	  build-unified
-	if [[ "$(_SPLIT)" == "true" ]]; then \
-	  make \
-	    build-split; \
-	fi
+	  build-chains
 	cp \
 	  -r \
 	  "AUTHORS.rst" \
