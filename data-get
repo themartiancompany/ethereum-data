@@ -28,15 +28,16 @@
  *     If not, see <https://www.gnu.org/licenses/>.
  */
 
+/* eslint-disable
+     no-unused-vars */
+
 const
   _libcrash_module_import =
     await import(
       "crash-js");
-console.log(_libcrash_module_import.default);
 const
   _libcrash_module =
     _libcrash_module_import.default;
-console.log(_libcrash_module);
 /* global
      _file_exists */
 const
@@ -115,7 +116,7 @@ export {
   _data_get,
   _data_split_get,
   _data_unified_get
-}
+};
 
 // module.exports = {
 //   _data_get:

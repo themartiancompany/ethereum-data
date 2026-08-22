@@ -258,7 +258,7 @@ install-scripts:
 	  ln \
 	    -s \
 	    "$(PREFIX)/lib/node_modules" \
-	    "$(LIB_DIR)/node_modules" || \
+	    "$(LIB_DIR)/nodejs/node_modules" || \
 	    true; \
 	  rm \
 	    -rf \

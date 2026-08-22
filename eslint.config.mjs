@@ -71,7 +71,6 @@ export default defineConfig([
          "error" },
    files:
      [ "**/*.js",
-       `**/data-get*`,
      ],
    languageOptions:
      { sourceType:
