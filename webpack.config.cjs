@@ -85,6 +85,7 @@ const
   _yargs_helpers_ignore_plugin =
     new _ignore_plugin(
           _yargs_helpers_ignore);
+
 module.exports = {
   entry:
     _input_file_path,

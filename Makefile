@@ -34,6 +34,7 @@ DOC_DIR=$(DESTDIR)$(PREFIX)/share/doc/$(_PROJECT)
 BIN_DIR=$(DESTDIR)$(PREFIX)/bin
 MAN_DIR?=$(DESTDIR)$(PREFIX)/share/man
 LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)
+NODE_DIR=$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)
 
 _INSTALL_FILE=\
   install \
@@ -72,17 +73,23 @@ INSTALL_DOC_TARGETS=\
 _INSTALL_TARGETS=\
   install-scripts \
   $(_INSTALL_DOC_TARGETS)
+_UNINSTALL_TARGETS=\
+  uninstall-man \
+  uninstall-scripts
 _INSTALL_TARGETS_ALL=\
   install \
   install-npm \
   $(_INSTALL_TARGETS) \
   $(_INSTALL_SCRIPTS_TARGETS)
+_UNINSTALL_TARGETS_ALL=\
+  $(_UNINSTALL_TARGETS)
 
 _PHONY_TARGETS=\
   $(_BUILD_TARGETS_ALL) \
   $(_CHECK_TARGETS_ALL) \
   $(_INSTALL_TARGETS_ALL) \
-  publish-npm
+  publish-npm \
+  $(_UNINSTALL_TARGETS_ALL)
   
 all: build-man build-unified build-split build-npm
 
@@ -401,5 +408,18 @@ publish-npm:
 	  publish \
 	  --access \
 	    "public"
+
+uninstall-man:
+
+	rm \
+	  -vrf \
+	  "$(MAN_DIR)/man1/evm-chains.1"
+
+uninstall-scripts:
+
+	rm \
+	  -vrf \
+	  "$(NODE_DIR)"
+
 
 .PHONY: $(_PHONY_TARGETS)
