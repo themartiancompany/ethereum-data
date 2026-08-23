@@ -39,17 +39,17 @@ const
      _file_exists */
 const
   _file_exists =
-    _libcrash_module._file_exists;
+    _libcrash._file_exists;
 /* global
      _json_read */
 const
   _json_read =
-    _libcrash_module._json_read;
+    _libcrash._json_read;
 /* global
      _path_join */
 const
   _path_join =
-    _libcrash_module._path_join;
+    _libcrash._path_join;
 
 function
   _data_split_get(
@@ -109,11 +109,15 @@ function
   return _data;
 }
 
+// ES6 module exports
+
 export {
   _data_get,
   _data_split_get,
   _data_unified_get
 };
+
+// Common Javascript exports
 
 // module.exports = {
 //   _data_get:

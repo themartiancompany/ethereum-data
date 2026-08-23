@@ -178,7 +178,7 @@ build-split:
 	      length)"; \
 	_msg=( \
 	  "Found '$${_chains_amount}'" \
-	  "chains." \
+	  "chains in 'chains.json'." \
 	); \
 	echo \
 	 "$${_msg[*]}"; \
@@ -190,7 +190,7 @@ build-split:
 	         -l)" - 2 ))"; \
 	_msg=( \
 	  "Found '$${_chains_existing}'" \
-	  "chains." \
+	  "chains in 'build/chains'." \
 	); \
 	echo \
 	 "$${_msg[*]}"; \
