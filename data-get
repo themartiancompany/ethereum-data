@@ -59,6 +59,9 @@ function
   _data =
     [];
   const
+    __dirname =
+      import.meta.dirname;
+  const
     _path =
       _path_join( [
         __dirname,
